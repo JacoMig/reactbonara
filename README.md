@@ -4,6 +4,7 @@
 * React w/ Typescript
 * eslint
 * basic css
+* jest
 #### How to install
 * git clone git@github.com:JacoMig/reactbonara.git
 * cd reactbonara
