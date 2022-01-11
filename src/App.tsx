@@ -85,7 +85,6 @@ const App: React.FC = () => {
             </>
           )
         ) : null}
-        {console.log(quiz)}
       </div>
     </div>
   );
