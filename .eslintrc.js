@@ -5,35 +5,35 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
   ],
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: "module",
+    warnOnUnsupportedTypeScriptVersion: false,
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ["react", "@typescript-eslint"],
   rules: {
-    'react/react-in-jsx-scope': 'off',
+    "react/react-in-jsx-scope": "off",
   },
   settings: {
     react: {
-      version: 'detect',
+      version: "detect",
     },
   },
   overrides: [
     {
-      files: ['**/*.test.{ts,tsx}'],
+      files: ["**/*.test.{ts,tsx}"],
       env: {
         jest: true,
       },
-      extends: ['plugin:jest/recommended'],
+      extends: ["plugin:jest/recommended"],
     },
   ],
 };
