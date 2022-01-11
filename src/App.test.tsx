@@ -19,7 +19,7 @@ describe("Test Update Quiz Function", () => {
         const update = updateQuizByClick(1, initQuiz);
         expect(update.results.correct).toEqual(1);
     });
-    it("should increment current if user click one of the list items", () => {
+    it("should increment current view if user answer one question", () => {
         const index = 0;
         const initQuiz: QuizTypes = {
             view: {
