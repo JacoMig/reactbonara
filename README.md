@@ -9,7 +9,7 @@
 * git clone git@github.com:JacoMig/reactbonara.git
 * cd reactbonara
 * npm i
-#### Options
+#### Scripts
 * npm run start (dev)
 * npm run build (prod)
 * npm run lint (linter)
