@@ -1,21 +1,21 @@
-export type SuccessType = {
-    success?: boolean;
+export type QuizViewTypes = {
+    question: string;
+    answers: string[];
+    current: number;
 };
 
-type WordsType = {
-    word: string;
-    letterMatchedCount: number;
+export type QuizTypes = {
+    view: QuizViewTypes;
+    results: ResultTypes;
 };
 
-export type WordsStateTypes = {
-    success: boolean;
-    words: WordsType[];
+export type QuizComponentPropsTypes = {
+    question: string;
+    answers: string[];
+    clickAnswer: (clicked: number) => void;
 };
 
-export type handleInputsValChangeTypes = {
-    handleInputsValChange: (inputVal: string) => void;
-};
-
-export type GuessedWordsType = {
-    words: WordsType[];
+export type ResultTypes = {
+    total: number;
+    correct: number;
 };

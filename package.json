@@ -24,11 +24,7 @@
         "lint": "eslint . --ext .ts,.tsx",
         "lint:fix": "eslint . --ext .ts,.tsx --fix",
         "format": "prettier --check \"./**/*.{ts,tsx,css,json}\"",
-        "format:fix": "prettier --write \"./**/**/*.{ts,tsx,css,json}\"",
-        "prepublishOnly": "npm test --watchAll=false && npm run lint",
-        "preversion": "npm run lint",
-        "version": "npm run format && git add -A src",
-        "postversion": "git push && git push --tags"
+        "format:fix": "prettier --write \"./**/**/*.{ts,tsx,css,json}\""
     },
     "eslintConfig": {
         "extends": [
@@ -49,9 +45,6 @@
         ]
     },
     "devDependencies": {
-        "@types/enzyme": "^3.10.10",
-        "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
-        "enzyme": "^3.11.0",
         "eslint": "^7.30.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-jest": "^24.3.6",

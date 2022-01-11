@@ -1,59 +1,87 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import Congrats from './components/Congrats';
-import GuessedWords from './components/GuessedWords';
-import Inputs from './components/Inputs';
-import { WordsStateTypes } from './types';
+import { useEffect, useState } from "react";
+import "./App.css";
+import QuizComponent from "./components/QuizComponent";
+import { QuizTypes } from "./types";
+import data from "./assets/data.json";
+import ResultComponent from "./components/ResultComponent";
 
-const defaultAppWordsState: WordsStateTypes = {
-    success: false,
-    words: []
+const initQuiz: QuizTypes = {
+    view: {
+        current: 0,
+        question: data[0].question,
+        answers: data[0].answers
+    },
+    results: {
+        total: 0,
+        correct: 0
+    }
 };
 
-const secretWord = 'Train';
+export const updateQuizByClick = (clicked: number, quiz: QuizTypes): QuizTypes => {
+    const current = quiz.view.current;
+    const correct = quiz.results.correct;
 
-export const getMatchedLetters = (Word: string, secretWord: string): number => {
-    const letters = Word.split('');
-    return letters.filter((letter: string) => secretWord.toLowerCase().includes(letter.toLowerCase())).length;
-};
+    const view =
+        current < data.length - 1
+            ? {
+                  current: current + 1,
+                  question: data[current + 1].question,
+                  answers: data[current + 1].answers
+              }
+            : quiz.view;
+    const results =
+        current < data.length
+            ? {
+                  total: current + 1,
+                  correct: clicked === data[current].correct ? correct + 1 : correct
+              }
+            : quiz.results;
 
-export const handleWordsContainer = (
-    prevState: WordsStateTypes,
-    currentWord: string,
-    secretWord: string
-): WordsStateTypes => {
-    const wordsArray = [
-        ...prevState.words,
-        { word: currentWord, letterMatchedCount: getMatchedLetters(currentWord, secretWord) }
-    ];
-    return {
-        success: currentWord.toLowerCase() === secretWord.toLowerCase() ? true : false,
-        words: [...new Map(wordsArray.map((wordItem) => [wordItem['word'], wordItem])).values()]
-    };
+    return { view, results };
 };
 
 const App: React.FC = () => {
-    const [appWordsState, setAppWordsState] = useState<WordsStateTypes>(defaultAppWordsState);
+    const [quiz, setQuiz] = useState<QuizTypes>();
 
-    const handleInputsValChange = (val: string) => {
-        setAppWordsState((state) => {
-            return handleWordsContainer(state, val, secretWord);
-        });
+    const clickAnswer = (clicked: number) => {
+        const updateQuiz = updateQuizByClick(clicked, quiz as QuizTypes);
+        setQuiz({ view: updateQuiz.view, results: updateQuiz.results });
+    };
+
+    const resetQuiz = (): void => {
+        setQuiz(initQuiz);
     };
 
     useEffect(() => {
-        // console.log(appWordsState);
-    }, [appWordsState]);
+        setQuiz(initQuiz);
+    }, []);
 
     return (
         <div className="App">
-            <header className="App-header">
-                <h2>Jotto Game</h2>
-                <p>Guessed a word</p>
-                <Inputs handleInputsValChange={handleInputsValChange} />
-                <Congrats success={appWordsState.success} />
-                {!appWordsState.success ? <GuessedWords words={appWordsState.words} /> : null}
-            </header>
+            <div className="App-container">
+                {quiz?.results ? (
+                    quiz?.results.total < data.length ? (
+                        <>
+                            <h2>Test: Come si fa la carbonara</h2>
+                            <h3>Rispondi alle domande</h3>
+                            <QuizComponent
+                                question={quiz.view.question}
+                                answers={quiz.view.answers}
+                                clickAnswer={clickAnswer}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <ResultComponent correct={quiz.results.correct} total={quiz.results.total} />
+                            {quiz.results.correct < quiz.results.total ? (
+                                <button onClick={resetQuiz}>Riprova</button>
+                            ) : null}
+                        </>
+                    )
+                ) : null}
+
+                {console.log(quiz)}
+            </div>
         </div>
     );
 };
